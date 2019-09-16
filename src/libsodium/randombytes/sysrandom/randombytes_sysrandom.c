@@ -22,7 +22,7 @@
 # include <sys/random.h>
 #endif
 #ifdef __linux__
-# ifdef HAVE_GETRANDOM
+# ifdef CONG
 #  define HAVE_LINUX_COMPATIBLE_GETRANDOM
 # else
 #  include <sys/syscall.h>
@@ -38,7 +38,7 @@
 # endif
 #endif
 #if !defined(NO_BLOCKING_RANDOM_POLL) && defined(__linux__)
-# define BLOCK_ON_DEV_RANDOM
+/* # define BLOCK_ON_DEV_RANDOM */
 #endif
 #ifdef BLOCK_ON_DEV_RANDOM
 # include <poll.h>

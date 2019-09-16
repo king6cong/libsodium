@@ -118,7 +118,7 @@ sodium_memzero(void * const pnt, const size_t len)
     if (len > 0U && memset_s(pnt, (rsize_t) len, 0, (rsize_t) len) != 0) {
         sodium_misuse(); /* LCOV_EXCL_LINE */
     }
-#elif defined(HAVE_EXPLICIT_BZERO)
+#elif defined(CONG)
     explicit_bzero(pnt, len);
 #elif defined(HAVE_EXPLICIT_MEMSET)
     explicit_memset(pnt, 0, len);
@@ -423,7 +423,7 @@ sodium_mlock(void *const addr, const size_t len)
 #if defined(MADV_DONTDUMP) && defined(HAVE_MADVISE)
     (void) madvise(addr, len, MADV_DONTDUMP);
 #endif
-#ifdef HAVE_MLOCK
+#ifdef CONG
     return mlock(addr, len);
 #elif defined(WINAPI_DESKTOP)
     return -(VirtualLock(addr, len) == 0);
@@ -440,7 +440,7 @@ sodium_munlock(void *const addr, const size_t len)
 #if defined(MADV_DODUMP) && defined(HAVE_MADVISE)
     (void) madvise(addr, len, MADV_DODUMP);
 #endif
-#ifdef HAVE_MLOCK
+#ifdef CONG
     return munlock(addr, len);
 #elif defined(WINAPI_DESKTOP)
     return -(VirtualUnlock(addr, len) == 0);
